@@ -1,4 +1,5 @@
 import util from '../helper/helper.js'
+import fantasyButtonAsset from '../constant/fantasy_button.js'
 
 export default class Home extends Phaser.Scene {
 
@@ -19,7 +20,7 @@ export default class Home extends Phaser.Scene {
 			"dark_ground_3": null,
 		}
 		this.animation = {
-			'walking': {
+			'idle': {
 				"object": null,
 				"sequence": [],
 				"frameRate": 0
@@ -31,15 +32,25 @@ export default class Home extends Phaser.Scene {
 
 	preload() {
 		// import nessassary file
-		this.gameWidth = this.sys.game.canvas.getAttribute("width");
-		this.gameHeight = this.sys.game.canvas.getAttribute("height");
-		this.load.image('action_background', './src/assets/ui/UIBoardLargeParchment.png');
-		this.load.image('home_background', './src/assets/Textures/backgrounds/background02.png');
-		this.load.image('terrain_dark_grass', './src/assets/Textures/terrain/terrain_dark_grass.png');
-		this.load.image('terrain_dark_ground', './src/assets/Textures/terrain/terrain_dark_ground.png');
+		this.gameWidth = this.sys.game.canvas.getAttribute("width")
+		this.gameHeight = this.sys.game.canvas.getAttribute("height")
+		this.load.image('action_background', './src/assets/ui/UIBoardLargeParchment.png')
+		this.load.image('home_background', './src/assets/Textures/backgrounds/background02.png')
+		this.load.image('terrain_dark_grass', './src/assets/Textures/terrain/terrain_dark_grass.png')
+		this.load.image('terrain_dark_ground', './src/assets/Textures/terrain/terrain_dark_ground.png')
+
+		
+		this.load.image('frame', fantasyButtonAsset.frame)
+		this.load.image('ring_bg_orange', fantasyButtonAsset.ring_background.orange)
+		this.load.image('ring_bg_blue', fantasyButtonAsset.ring_background.blue)
+		this.load.image('ring_bg_yellow', fantasyButtonAsset.ring_background.yellow)
+		this.load.image('icon_scroll', fantasyButtonAsset.icon.scroll)
+		this.load.image('icon_book', fantasyButtonAsset.icon.book)
+		this.load.image('icon_skull', fantasyButtonAsset.icon.skull)
+	
 
 		// import walking animation
-		util.loadAnimation(this, this.animation, 'walking')
+		util.loadAnimation(this, this.animation, 'idle')
 	}
 
 	create() {
@@ -57,27 +68,30 @@ export default class Home extends Phaser.Scene {
 		util.rescale(this.sprite.action_background, this.gameWidth)
 
 		this.anims.create({
-			key: 'walking',
-			frames: this.animation.walking.sequence,
-			frameRate: this.animation.walking.frameRate,
+			key: 'idle',
+			frames: this.animation.idle.sequence,
+			frameRate: this.animation.idle.frameRate,
 			repeat: -1
 		});
-		this.animation.walking.object = this.add.sprite(120, 245, this.animation.walking.sequence[0].key)
-		util.rescale(this.animation.walking.object, 200)
+		this.animation.idle.object = this.add.sprite(120, 245, this.animation.idle.sequence[0].key)
+		util.rescale(this.animation.idle.object, 200)
+		this.animation.idle.object.play('idle')
 
+		util.draw_fantasy_button(this, 380, 480, 'frame', 'ring_bg_orange', 'icon_scroll',() => { this.scene.start("Level")})
+		util.draw_fantasy_button(this, 530, 480, 'frame', 'ring_bg_blue', 'icon_book',() => { console.log("refresh saved memory")})
+		util.draw_fantasy_button(this, 680, 480, 'frame', 'ring_bg_yellow', 'icon_skull',() => { console.log("refresh saved memory")})
 	}
 
 	update() {
-
+		this.move();
 	}
 
 
 	move() {
-		this.sprite.home_background.tilePositionX += 0.5
-		this.terrain.dark_ground_1.tilePositionX += 1
-		this.terrain.dark_ground_2.tilePositionX += 1
-		this.terrain.dark_ground_3.tilePositionX += 1
-		this.terrain.dark_grass.tilePositionX += 1
-		this.animation.walking.object.play('walking')
+		this.sprite.home_background.tilePositionX += 0.1
+		// this.terrain.dark_ground_1.tilePositionX += 1
+		// this.terrain.dark_ground_2.tilePositionX += 1
+		// this.terrain.dark_ground_3.tilePositionX += 1
+		// this.terrain.dark_grass.tilePositionX += 1
 	}
 }

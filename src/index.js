@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import Menu from "./scenes/menu.js"
 import Home from "./scenes/home.js"
+import Level from "./scenes/level.js"
 
 const config = {
   type: Phaser.AUTO,
@@ -8,6 +9,9 @@ const config = {
   width: 861,
   // height: 484,
   height: 540,
+  global: {
+    level : 1
+  },
   physics: {
     default: 'arcade',
     arcade: {
@@ -16,7 +20,8 @@ const config = {
     }
   },
   // scene: [Menu, Home],
-  scene: [Home],
+  scene: [Menu, Home , Level],
+  // scene: [Home],
 };
 
 const game = new Phaser.Game(config);

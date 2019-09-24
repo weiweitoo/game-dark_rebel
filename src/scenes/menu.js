@@ -35,6 +35,7 @@ export default class Menu extends Phaser.Scene {
 
 		// import idle animation
 		util.loadAnimation(this, this.animation, 'idle')
+		this.initGameData()
 	}
 
 	create() {
@@ -60,6 +61,14 @@ export default class Menu extends Phaser.Scene {
 
 	update() {
 
+	}
+
+
+	initGameData(){
+		this.sys.game.global_level=2
+		this.sys.game.global_hp=100
+		this.sys.game.global_mp=50
+		// more player attribute, write player attribute in a OOP class
 	}
 
 }

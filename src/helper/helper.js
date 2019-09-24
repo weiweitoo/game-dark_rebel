@@ -1,7 +1,5 @@
 import animationData from '../constant/animation.js'
 
-
-
 export default {
 	pad(num, size) {
 		var s = num + "";
@@ -34,8 +32,29 @@ export default {
 			"text": temp_text
 		}
 	},
-	draw_fantasy_button() {
+	draw_fantasy_button(scene, x, y, frame, background, icon, press_handler) {
+		let background_object = scene.add.sprite(x, y, background).setOrigin(0.5)
+		background_object.displayWidth = 100
+		background_object.scaleY = background_object.scaleX
 
+		let frame_object = scene.add.sprite(x, y, frame).setOrigin(0.5)
+		frame_object.displayWidth = 100
+		frame_object.scaleY = frame_object.scaleX
+
+		let icon_object = scene.add.sprite(x, y, icon).setOrigin(0.5)
+		icon_object.displayWidth = 100
+		icon_object.scaleY = icon_object.scaleX
+
+		icon_object.setInteractive();
+		icon_object.on('pointerup', function () {
+			press_handler()
+		})
+
+		return {
+			"background": background_object,
+			"frame": frame_object,
+			"icon": background_object
+		}
 	},
 	loadAnimation(scene, animationArray, animationString) {
 		for (let index = 0; index < animationData[animationString].count; index++) {
