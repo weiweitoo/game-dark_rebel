@@ -1,5 +1,6 @@
 import util from '../helper/helper.js'
 import level from '../constant/level_attribute.js'
+import fantasyButtonAsset from '../constant/fantasy_button.js'
 
 export default class Level extends Phaser.Scene {
 
@@ -25,7 +26,11 @@ export default class Level extends Phaser.Scene {
 				"sequence": [],
 				"frameRate": 0
 			}
-        }
+		}
+		this.hud = {
+			"hp" : null,
+			"mp" : null
+		}
         this.dynamicAsset = {
             "background" : 'home_background'+this.LEVEL,
             "terrain_dark_grass" : 'terrain_dark_grass'+this.LEVEL,
@@ -49,6 +54,25 @@ export default class Level extends Phaser.Scene {
 		this.load.image(this.dynamicAsset.background, level_asset.background_asset);
 		this.load.image(this.dynamicAsset.terrain_dark_grass, level_asset.terrain_asset);
 		this.load.image(this.dynamicAsset.terrain_dark_ground, level_asset.terrain_ground);
+
+		this.load.image('frame', fantasyButtonAsset.frame)
+		this.load.image('ring_bg_orange', fantasyButtonAsset.ring_background.orange)
+		this.load.image('ring_bg_blue', fantasyButtonAsset.ring_background.blue)
+		this.load.image('ring_bg_yellow', fantasyButtonAsset.ring_background.yellow)
+		this.load.image('ring_bg_green', fantasyButtonAsset.ring_background.green)
+		this.load.image('icon_sword', fantasyButtonAsset.icon.sword)
+		this.load.image('icon_shield', fantasyButtonAsset.icon.shield)
+		this.load.image('icon_potion', fantasyButtonAsset.icon.potion)
+		this.load.image('icon_candles', fantasyButtonAsset.icon.candles)
+
+
+		// draw hud
+		this.load.image('HP_happy', './src/assets/ui/heart/RedHappyWhiteborder.png');
+		this.load.image('HP_moody', './src/assets/ui/heart/RedMoodyWhiteborder.png');
+		this.load.image('HP_sad', './src/assets/ui/heart/RedSadWhiteborder.png');
+		this.load.image('MP_happy', './src/assets/ui/heart/TurquoiseHappyWhiteborder.png');
+		this.load.image('MP_moody', './src/assets/ui/heart/TurquoiseMoodyWhiteborder.png');
+		this.load.image('MP_sad', './src/assets/ui/heart/TurquoiseSadWhiteborder.png');
 
 		// import walking animation
 		util.loadAnimation(this, this.animation, 'walking')
@@ -76,11 +100,24 @@ export default class Level extends Phaser.Scene {
 		});
 		this.animation.walking.object = this.add.sprite(120, 245, this.animation.walking.sequence[0].key)
 		util.rescale(this.animation.walking.object, 200)
+		this.animation.walking.object.play('walking')
 
+		
+
+		// DrawUI
+		this.hud.hp = this.add.sprite(80, 460, 'HP_happy').setOrigin(0.5)
+		this.hud.mp = this.add.sprite(80, 510, 'MP_happy').setOrigin(0.5)
+		util.rescale(this.hud.mp, 40)
+		util.rescale(this.hud.hp, 40)
+
+		util.draw_fantasy_button(this, 270, 480, 'frame', 'ring_bg_yellow', 'icon_sword',() => { this.scene.start("Level")})
+		util.draw_fantasy_button(this, 420, 480, 'frame', 'ring_bg_blue', 'icon_shield',() => { console.log("de123")})
+		util.draw_fantasy_button(this, 570, 480, 'frame', 'ring_bg_green', 'icon_potion',() => { this.scene.start("Menu")})
+		util.draw_fantasy_button(this, 720, 480, 'frame', 'ring_bg_orange', 'icon_candles',() => { this.scene.start("Menu")})
 	}
 
 	update() {
-		// this.move();
+		this.move();
 	}
 
 
@@ -90,6 +127,5 @@ export default class Level extends Phaser.Scene {
 		this.terrain.dark_ground_2.tilePositionX += 1
 		this.terrain.dark_ground_3.tilePositionX += 1
 		this.terrain.dark_grass.tilePositionX += 1
-		this.animation.walking.object.play('walking')
 	}
 }

@@ -55,7 +55,7 @@ export default class Menu extends Phaser.Scene {
 			frameRate: this.animation.idle.frameRate,
 			repeat: -1
 		});
-		this.animation.idle.object = this.add.sprite(200, 300, this.animation.idle[0]).play('idle')
+		this.animation.idle.object = this.add.sprite(210, 300, this.animation.idle[0]).play('idle')
 		util.rescale(this.animation.idle.object, 500)
 	}
 

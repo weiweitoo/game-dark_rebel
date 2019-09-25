@@ -47,9 +47,8 @@ export default class Home extends Phaser.Scene {
 		this.load.image('icon_scroll', fantasyButtonAsset.icon.scroll)
 		this.load.image('icon_book', fantasyButtonAsset.icon.book)
 		this.load.image('icon_skull', fantasyButtonAsset.icon.skull)
-	
 
-		// import walking animation
+		// import idle animation
 		util.loadAnimation(this, this.animation, 'idle')
 	}
 
@@ -78,8 +77,8 @@ export default class Home extends Phaser.Scene {
 		this.animation.idle.object.play('idle')
 
 		util.draw_fantasy_button(this, 380, 480, 'frame', 'ring_bg_orange', 'icon_scroll',() => { this.scene.start("Level")})
-		util.draw_fantasy_button(this, 530, 480, 'frame', 'ring_bg_blue', 'icon_book',() => { console.log("refresh saved memory")})
-		util.draw_fantasy_button(this, 680, 480, 'frame', 'ring_bg_yellow', 'icon_skull',() => { console.log("refresh saved memory")})
+		util.draw_fantasy_button(this, 530, 480, 'frame', 'ring_bg_blue', 'icon_book',() => { console.log("de123")})
+		util.draw_fantasy_button(this, 680, 480, 'frame', 'ring_bg_yellow', 'icon_skull',() => { this.scene.start("Menu")})
 	}
 
 	update() {
@@ -89,9 +88,5 @@ export default class Home extends Phaser.Scene {
 
 	move() {
 		this.sprite.home_background.tilePositionX += 0.1
-		// this.terrain.dark_ground_1.tilePositionX += 1
-		// this.terrain.dark_ground_2.tilePositionX += 1
-		// this.terrain.dark_ground_3.tilePositionX += 1
-		// this.terrain.dark_grass.tilePositionX += 1
 	}
 }
