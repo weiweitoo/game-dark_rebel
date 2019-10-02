@@ -26,6 +26,20 @@ export default class Home extends Phaser.Scene {
 				"frameRate": 0
 			}
 		}
+		this.ui = {
+			"name_badge": null,
+			"name": null,
+			"str": null,
+			"agi": null,
+			"int": null,
+			"vit": null
+		}
+		this.attribute = {
+			"str": null,
+			"agi": null,
+			"int": null,
+			"vit": null
+		}
 		this.terrain_dark_ground_height = null
 		this.terrain_dark_grass_height = null
 	}
@@ -39,7 +53,14 @@ export default class Home extends Phaser.Scene {
 		this.load.image('terrain_dark_grass', './src/assets/Textures/terrain/terrain_dark_grass.png')
 		this.load.image('terrain_dark_ground', './src/assets/Textures/terrain/terrain_dark_ground.png')
 
-		
+		this.load.image('hud', './src/assets/ui/hud.png')
+		this.load.image('attr_background', './src/assets/ui/TextBTN_Medium.png')
+
+		this.load.image('dialog_title', './src/assets/ui/Exclamation_Yellow.png')
+		this.load.image('dialog_button', './src/assets/ui/TextBTN_Medium.png')
+		this.load.image('dialog_frame', './src/assets/ui/UIBoardSmallSet.png')
+
+
 		this.load.image('frame', fantasyButtonAsset.frame)
 		this.load.image('ring_bg_orange', fantasyButtonAsset.ring_background.orange)
 		this.load.image('ring_bg_blue', fantasyButtonAsset.ring_background.blue)
@@ -53,19 +74,29 @@ export default class Home extends Phaser.Scene {
 	}
 
 	create() {
-		// Draw background and ground
-		this.sprite.home_background = this.add.tileSprite(0, 0, this.gameWidth, this.gameHeight, 'home_background').setOrigin(0)
-		this.terrain_dark_ground_height = this.textures.get('terrain_dark_ground').getSourceImage().height
-		this.terrain_dark_grass_height = this.textures.get('terrain_dark_grass').getSourceImage().height
-		this.terrain.dark_ground_1 = this.add.tileSprite(0, 300, this.gameWidth, this.terrain_dark_ground_height, 'terrain_dark_ground').setOrigin(0)
-		this.terrain.dark_ground_2 = this.add.tileSprite(0, 360, this.gameWidth, this.terrain_dark_ground_height, 'terrain_dark_ground').setOrigin(0)
-		this.terrain.dark_ground_3 = this.add.tileSprite(0, 420, this.gameWidth, this.terrain_dark_ground_height, 'terrain_dark_ground').setOrigin(0)
-		this.terrain.dark_grass = this.add.tileSprite(0, 250, this.gameWidth, this.terrain_dark_grass_height, 'terrain_dark_grass').setOrigin(0)
+		this.drawEnvironment()
+		this.drawPlayer()
+		this.drawUI()
 
-		// Add avatar and add animation
-		this.sprite.action_background = this.add.sprite(0, this.gameHeight - 150, 'action_background').setOrigin(0)
-		util.rescale(this.sprite.action_background, this.gameWidth)
+		this.loadAttribute()
+	}
 
+	update() {
+		this.move();
+	}
+
+	move() {
+		this.sprite.home_background.tilePositionX += 0.12
+	}
+
+	loadAttribute() {
+		this.attribute.str = this.sys.game.global_str
+		this.attribute.agi = this.sys.game.global_agi
+		this.attribute.int = this.sys.game.global_int
+		this.attribute.vit = this.sys.game.global_vit
+	}
+
+	drawPlayer() {
 		this.anims.create({
 			key: 'idle',
 			frames: this.animation.idle.sequence,
@@ -75,18 +106,76 @@ export default class Home extends Phaser.Scene {
 		this.animation.idle.object = this.add.sprite(120, 245, this.animation.idle.sequence[0].key)
 		util.rescale(this.animation.idle.object, 200)
 		this.animation.idle.object.play('idle')
-
-		util.draw_fantasy_button(this, 380, 480, 'frame', 'ring_bg_orange', 'icon_scroll',() => { this.scene.start("Level")})
-		util.draw_fantasy_button(this, 530, 480, 'frame', 'ring_bg_blue', 'icon_book',() => { console.log("de123")})
-		util.draw_fantasy_button(this, 680, 480, 'frame', 'ring_bg_yellow', 'icon_skull',() => { this.scene.start("Menu")})
 	}
 
-	update() {
-		this.move();
+	drawEnvironment() {
+		this.sprite.home_background = this.add.tileSprite(0, 0, this.gameWidth, this.gameHeight, 'home_background').setOrigin(0)
+		this.terrain_dark_ground_height = this.textures.get('terrain_dark_ground').getSourceImage().height
+		this.terrain_dark_grass_height = this.textures.get('terrain_dark_grass').getSourceImage().height
+		this.terrain.dark_ground_1 = this.add.tileSprite(0, 300, this.gameWidth, this.terrain_dark_ground_height, 'terrain_dark_ground').setOrigin(0)
+		this.terrain.dark_ground_2 = this.add.tileSprite(0, 360, this.gameWidth, this.terrain_dark_ground_height, 'terrain_dark_ground').setOrigin(0)
+		this.terrain.dark_ground_3 = this.add.tileSprite(0, 420, this.gameWidth, this.terrain_dark_ground_height, 'terrain_dark_ground').setOrigin(0)
+		this.terrain.dark_grass = this.add.tileSprite(0, 250, this.gameWidth, this.terrain_dark_grass_height, 'terrain_dark_grass').setOrigin(0)
 	}
 
+	drawUI() {
+		this.sprite.action_background = this.add.sprite(0, this.gameHeight - 150, 'action_background').setOrigin(0)
+		util.rescale(this.sprite.action_background, this.gameWidth)
+		util.draw_fantasy_button(this, 380, 480, 'frame', 'ring_bg_orange', 'icon_scroll', () => {
+			this.scene.start("Level")
+		})
+		util.draw_fantasy_button(this, 530, 480, 'frame', 'ring_bg_blue', 'icon_book', () => {
+			util.messageBox(this, "dialog_frame", "hud", "dialog_button", "Happy new year", "Got it!", "Message", () => {
+				console.log("Hello brow")
+			})
+		})
+		util.draw_fantasy_button(this, 680, 480, 'frame', 'ring_bg_yellow', 'icon_skull', () => {
+			util.attributeBox(this, "dialog_frame", "hud", "dialog_button", this.attribute, (newAttribute) => {
+				console.log(newAttribute)
+			})
+		})
 
-	move() {
-		this.sprite.home_background.tilePositionX += 0.1
+		this.ui.name = util.drawButton(this, 120, 450, this.sys.game.global_name, "hud", null, () => {
+			// callback
+		}, {
+			fontFamily: 'bm-yeon-sung',
+			fontSize: '20px',
+			fill: '#FFFFFF',
+			align: 'center'
+		}, 125)
+
+
+		this.ui.str = this.add.text(65, 480, "STR: " + this.sys.game.global_str, {
+			fontFamily: 'bm-yeon-sung',
+			fontSize: '18px',
+			// stroke: '#000000',
+			// strokeThickness: '2',
+			fill: '#DDDDD'
+		}).setOrigin(0)
+
+		this.ui.int = this.add.text(65, 500, "INT: " + this.sys.game.global_int, {
+			fontFamily: 'bm-yeon-sung',
+			fontSize: '18px',
+			// stroke: '#000000',
+			// strokeThickness: '2',
+			fill: '#DDDDD'
+		}).setOrigin(0)
+
+		this.ui.agi = this.add.text(130, 480, "AGI: " + this.sys.game.global_agi, {
+			fontFamily: 'bm-yeon-sung',
+			fontSize: '18px',
+			// stroke: '#1111CC',
+			// strokeThickness: '2',
+			fill: '#DDDDD'
+		}).setOrigin(0)
+
+
+		this.ui.vit = this.add.text(130, 500, "VIT: " + this.sys.game.global_vit, {
+			fontFamily: 'bm-yeon-sung',
+			fontSize: '18px',
+			// stroke: '#11CC11',
+			// strokeThickness: '2',
+			fill: '#DDDDD'
+		}).setOrigin(0)
 	}
 }
