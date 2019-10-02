@@ -36,7 +36,7 @@ targets all browsers with total usage over "0.25%" but excludes IE11 and Opera M
 
   ```
   "browsers": [
-    ">0.25%",
+    ">0.25%",gbfghfghfghfghfgfgfgfgfgfgfgf
     "not ie 11",
     "not op_mini all"
   ]
