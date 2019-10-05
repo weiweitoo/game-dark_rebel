@@ -7,7 +7,6 @@ export default
         "terrain_ground" : "./src/assets/Textures/terrain/terrain_dark_ground.png",
         "monster": [
             ["g", "a"],
-            ["m", "m"]
         ]
     },
     "2" : {
@@ -17,8 +16,6 @@ export default
         "terrain_ground" : "./src/assets/Textures/terrain/terrain_dark_ground.png",
         "monster": [
             ["m"],
-            ["m", "a"],
-            ["a","m","a"]
         ]
     },
     "3" : {
@@ -28,8 +25,6 @@ export default
         "terrain_ground" : "./src/assets/Textures/terrain/terrain_dark_ground.png",
         "monster": [
             ["m"],
-            ["m", "m"],
-            ["a","a","a"]
         ]
     }
 }

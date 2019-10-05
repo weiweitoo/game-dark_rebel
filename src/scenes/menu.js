@@ -42,7 +42,6 @@ export default class Menu extends Phaser.Scene {
 	}
 
 	create() {
-
 		this.sprite.background = this.add.sprite(0, 0, 'uibackground')
 		this.sprite.background.setOrigin(0)
 		util.rescale(this.sprite.background, this.gameWidth)
@@ -61,7 +60,7 @@ export default class Menu extends Phaser.Scene {
 			fontSize: '28px'
 		}, 150)
 		this.button.reembark = util.drawButton(this, this.gameWidth - 200, 360, "Reembark", "button", "button_pressed", () => {
-			console.log("refresh saved memory")
+			// console.log("refresh saved memory")
 		}, {
 			fontFamily: 'bm-yeon-sung',
 			fontSize: '28px'
@@ -82,10 +81,9 @@ export default class Menu extends Phaser.Scene {
 
 	}
 
-
 	initGameData() {
 		this.sys.game.global_name = "Raiz"
-		this.sys.game.global_level = 1
+		this.sys.game.global_level = 0
 		this.sys.game.global_str = 2
 		this.sys.game.global_agi = 2
 		this.sys.game.global_int = 2

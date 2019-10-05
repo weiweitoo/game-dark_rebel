@@ -80,6 +80,18 @@ export default class Home extends Phaser.Scene {
 		this.drawUI()
 
 		this.loadAttribute()
+
+		// For tutorial
+		setTimeout(() => {
+			if(this.sys.game.global_level == 0){
+				util.messageBox(this, "dialog_frame", "hud", "dialog_button", "Welcome back. Raiz. \nClick the 'scroll' button to start the journey", "Okay", "Tutorial", () => {
+				})
+			}
+			else if(this.sys.game.global_level == 1){
+				util.messageBox(this, "dialog_frame", "hud", "dialog_button", "You got a mission!\nClick the 'book' button to check quest", "Okay", "Tutorial", () => {
+				})
+			}
+		}, 1000)
 	}
 
 	update() {
@@ -123,18 +135,32 @@ export default class Home extends Phaser.Scene {
 		this.sprite.action_background = this.add.sprite(0, this.gameHeight - 150, 'action_background').setOrigin(0)
 		util.rescale(this.sprite.action_background, this.gameWidth)
 		util.draw_fantasy_button(this, 380, 480, 'frame', 'ring_bg_orange', 'icon_scroll', () => {
-			this.scene.start("Level")
+			if(this.sys.game.global_level == 0){
+				this.scene.start("CutScene1")
+			}
+			else if(this.sys.game.global_level == 2){
+				this.scene.start("CutScene2")
+			}
+			else if(this.sys.game.global_level == 3){
+				this.scene.start("CutScene3")
+			}
+			else{
+				this.scene.start("Level")
+			}
 		})
 		util.draw_fantasy_button(this, 530, 480, 'frame', 'ring_bg_blue', 'icon_book', () => {
-			util.messageBox(this, "dialog_frame", "hud", "dialog_button", "Happy new year", "Got it!", "Message", () => {
-				console.log("Hello brow")
-			})
+			// PUT QUEST HERE
+			// util.messageBox(this, "dialog_frame", "hud", "dialog_button", "Happy new year", "Got it!", "Message", () => {
+			// 	console.log("Hello bro")
+			// })
 		})
 		util.draw_fantasy_button(this, 680, 480, 'frame', 'ring_bg_yellow', 'icon_skull', () => {
-			util.attributeBox(this, "dialog_frame", "hud", "dialog_button", this.attribute, 1, (newAttribute) => {
-				console.log(newAttribute)
+			// util.attributeBox(this, "dialog_frame", "hud", "dialog_button", this.attribute, 1, (newAttribute) => {
+			// 	console.log(newAttribute)
+			// })
+			util.messageBox(this, "dialog_frame", "hud", "dialog_button", "Boneeeeeeeee!!!!!!!!", "Close", "Message", () => {
+				// console.log("Hello bro")
 			})
-			// console.log("exit")
 		})
 
 		this.ui.name = util.drawButton(this, 120, 450, this.sys.game.global_name, "hud", null, () => {

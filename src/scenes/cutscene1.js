@@ -124,7 +124,8 @@ export default class CutScene extends Phaser.Scene {
 										util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
 										"\"Fair tidings, young lord. And thank you for lending a hand.\"",
 										"Continue", "Woodmon Villager", () => {
-											console.log("Hello brow")
+											this.sys.game.global_level += 1
+											this.scene.start("Home")
 										})
 									})
 								})

@@ -133,7 +133,7 @@ export default class CutScene2 extends Phaser.Scene {
 										util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
 										"\"Be careful, dear friend.\"",
 										"Continue", "Firemon Artist", () => {
-											console.log("Hello brow")
+											this.scene.start("Level")
 										})
 									})
 								})

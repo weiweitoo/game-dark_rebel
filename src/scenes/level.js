@@ -243,9 +243,12 @@ export default class Level extends Phaser.Scene {
 		this.unit.player.setDepth(9)
 
 		this.spawn_level_or_winner()
+
+		this.gameState = "playing"
 	}
 
 	update() {
+		console.log(this.gameState)
 		if (this.gameState === "playing") {
 			this.move()
 			this.checkWin()
