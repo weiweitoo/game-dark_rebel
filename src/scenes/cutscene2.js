@@ -133,6 +133,9 @@ export default class CutScene2 extends Phaser.Scene {
 										util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
 										"\"Be careful, dear friend.\"",
 										"Continue", "Firemon Artist", () => {
+											// learn skill
+											this.sys.game.global_skill[1] = 1
+											this.sys.game.global_skill[2] = 1
 											this.scene.start("Level")
 										})
 									})

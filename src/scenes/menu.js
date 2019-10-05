@@ -32,10 +32,7 @@ export default class Menu extends Phaser.Scene {
 	preload() {
 		this.gameWidth = this.sys.game.canvas.getAttribute("width")
 		this.gameHeight = this.sys.game.canvas.getAttribute("height")
-		this.load.image('uibackground', './src/assets/ui/UIBoardLargeParchment.png')
-		this.load.image('button', './src/assets/ui/TextBTN_Medium.png')
-		this.load.image('button_pressed', './src/assets/ui/TextBTN_Medium_Pressed.png')
-
+		
 		// import idle animation
 		util.loadAnimation(this, animationData, this.animation, 'idle')
 		this.initGameData()
@@ -88,6 +85,7 @@ export default class Menu extends Phaser.Scene {
 		this.sys.game.global_agi = 2
 		this.sys.game.global_int = 2
 		this.sys.game.global_vit = 3
+		this.sys.game.global_skill = [1,0,0]
 		// more player attribute, write player attribute in a OOP class
 	}
 

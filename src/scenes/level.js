@@ -186,7 +186,6 @@ export default class Level extends Phaser.Scene {
 
 		this.gameWidth = this.sys.game.canvas.getAttribute("width");
 		this.gameHeight = this.sys.game.canvas.getAttribute("height");
-		this.load.image("action_background", './src/assets/ui/UIBoardLargeParchment.png');
 
 		this.level_asset = level[this.LEVEL.toString()]
 		this.load.image(this.dynamicAsset.background, this.level_asset.background_asset);
@@ -195,24 +194,6 @@ export default class Level extends Phaser.Scene {
 		this.monsters_wave = this.level_asset.monster;
 		this.max_wave = this.monsters_wave.length
 		this.curr_wave = 0;	//start from -1
-
-		this.load.image('frame', fantasyButtonAsset.frame)
-		this.load.image('ring_bg_orange', fantasyButtonAsset.ring_background.orange)
-		this.load.image('ring_bg_blue', fantasyButtonAsset.ring_background.blue)
-		this.load.image('ring_bg_yellow', fantasyButtonAsset.ring_background.yellow)
-		this.load.image('ring_bg_green', fantasyButtonAsset.ring_background.green)
-		this.load.image('icon_sword', fantasyButtonAsset.icon.sword)
-		this.load.image('icon_shield', fantasyButtonAsset.icon.shield)
-		this.load.image('icon_potion', fantasyButtonAsset.icon.potion)
-		this.load.image('icon_candles', fantasyButtonAsset.icon.candles)
-
-		this.load.image('HP', './src/assets/ui/heart/RedPlainBlackborder.png')
-		this.load.image('MP', './src/assets/ui/heart/BluePlainBlackborder.png')
-
-		this.load.audio('attack', './src/assets/audio/effect/attack.wav');
-		this.load.audio('fire', './src/assets/audio/effect/fire.wav');
-		this.load.audio('water', './src/assets/audio/effect/water.wav');
-		this.load.audio('air', './src/assets/audio/effect/air.wav');
 
 		// Load animation
 		this.load_animations()
@@ -243,12 +224,12 @@ export default class Level extends Phaser.Scene {
 		this.unit.player.setDepth(9)
 
 		this.spawn_level_or_winner()
+		this.removeCoolDown()
 
 		this.gameState = "playing"
 	}
 
 	update() {
-		console.log(this.gameState)
 		if (this.gameState === "playing") {
 			this.move()
 			this.checkWin()
@@ -461,9 +442,15 @@ export default class Level extends Phaser.Scene {
 		}).setOrigin(0)
 
 		// util.draw_fantasy_button(this, 270, 480, 'frame', 'ring_bg_yellow', 'icon_sword', () => { this.castSkill(1) })
-		this.hud.fire = util.draw_fantasy_button(this, 420, 480, 'frame', 'ring_bg_orange', 'icon_candles', () => { this.castSkill(2) })
-		this.hud.water = util.draw_fantasy_button(this, 570, 480, 'frame', 'ring_bg_green', 'icon_potion', () => { this.castSkill(3) })
-		this.hud.air = util.draw_fantasy_button(this, 720, 480, 'frame', 'ring_bg_blue', 'icon_shield', () => { this.castSkill(4) })
+		if(this.sys.game.global_skill[0] === 1){
+			this.hud.fire = util.draw_fantasy_button(this, 420, 480, 'frame', 'ring_bg_orange', 'icon_candles', this.sys.game.global_skill[0] == 0, () => { this.castSkill(2) })
+		}
+		else if(this.sys.game.global_skill[1] === 1){
+			this.hud.water = util.draw_fantasy_button(this, 570, 480, 'frame', 'ring_bg_green', 'icon_potion', this.sys.game.global_skill[1] == 0, () => { this.castSkill(3) })
+		}
+		else if(this.sys.game.global_skill[2] === 1){
+			this.hud.air = util.draw_fantasy_button(this, 720, 480, 'frame', 'ring_bg_blue', 'icon_shield', this.sys.game.global_skill[2] == 0, () => { this.castSkill(4) })
+		}
 
 	}
 
@@ -494,6 +481,20 @@ export default class Level extends Phaser.Scene {
 			fontSize: '16px',
 			fill: '#FFFFFF'
 		}).setOrigin(0.5)
+	}
+
+	removeCoolDown(){
+		setInterval(() => {
+			if(this.skillCoolDown.fire > 0){
+				this.skillCoolDown.fire -= 1
+			}
+			if(this.skillCoolDown.water > 0){
+				this.skillCoolDown.water -= 1
+			}
+			if(this.skillCoolDown.air > 0){
+				this.skillCoolDown.air -= 1
+			}
+		}, 1000);
 	}
 
 	spawnMonster(type) {
@@ -692,7 +693,8 @@ export default class Level extends Phaser.Scene {
 		// 	this.unit.player.play('run_slashing');
 		// 	this.audio.attack.play()
 		// }
-		if (type === 2) {
+		if (type === 2 && this.skillCoolDown.fire <= 0) {
+			this.skillCoolDown.fire = 6
 			this.drawMP(this.unit.player, 'Pyromancy', "#FF0000")
 			this.spawn_effect(this.unit.player.x + 200, this.unit.player.y, "fire", this.gameWidth);
 			this.unit.monsters.map((monster) => {
@@ -702,14 +704,16 @@ export default class Level extends Phaser.Scene {
 			})
 			this.audio.fire.play()
 		}
-		else if (type === 3) {
+		else if (type === 3 && this.skillCoolDown.water <= 0) {
+			this.skillCoolDown.water = 6
 			this.drawMP(this.unit.player, "+" + (playerDamage) + ' Heal', "#00FF00")
 			this.spawn_effect(this.unit.player.x, this.unit.player.y, "water");
 			this.receiveDamage(-1 * (playerDamage))
 			// this.drawDamage(this.unit.player, -1 * playerDamage)
 			this.audio.water.play()
 		}
-		else if (type === 4) {
+		else if (type === 4 && this.skillCoolDown.air <= 0) {
+			this.skillCoolDown.air = 6
 			this.drawMP(this.unit.player, 'Barrier', "#FFFFFF")
 			this.spawn_effect(this.unit.player.x, this.unit.player.y, "air");
 			this.buff.defense = true
@@ -719,6 +723,11 @@ export default class Level extends Phaser.Scene {
 			}, 3000)
 			this.audio.air.play()
 		}
+		else{
+			// not proceed anymore
+			return
+		}
+
 		this.unit.player.play('run_throwing');
 		this.deductMP(5)
 		this.drawHud();

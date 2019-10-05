@@ -49,26 +49,7 @@ export default class Home extends Phaser.Scene {
 		// import nessassary file
 		this.gameWidth = this.sys.game.canvas.getAttribute("width")
 		this.gameHeight = this.sys.game.canvas.getAttribute("height")
-		this.load.image('action_background', './src/assets/ui/UIBoardLargeParchment.png')
-		this.load.image('home_background', './src/assets/Textures/backgrounds/background02.png')
-		this.load.image('terrain_dark_grass', './src/assets/Textures/terrain/terrain_dark_grass.png')
-		this.load.image('terrain_dark_ground', './src/assets/Textures/terrain/terrain_dark_ground.png')
 
-		this.load.image('hud', './src/assets/ui/hud.png')
-		this.load.image('attr_background', './src/assets/ui/TextBTN_Medium.png')
-
-		this.load.image('dialog_title', './src/assets/ui/Exclamation_Yellow.png')
-		this.load.image('dialog_button', './src/assets/ui/TextBTN_Medium.png')
-		this.load.image('dialog_frame', './src/assets/ui/UIBoardSmallSet.png')
-
-
-		this.load.image('frame', fantasyButtonAsset.frame)
-		this.load.image('ring_bg_orange', fantasyButtonAsset.ring_background.orange)
-		this.load.image('ring_bg_blue', fantasyButtonAsset.ring_background.blue)
-		this.load.image('ring_bg_yellow', fantasyButtonAsset.ring_background.yellow)
-		this.load.image('icon_scroll', fantasyButtonAsset.icon.scroll)
-		this.load.image('icon_book', fantasyButtonAsset.icon.book)
-		this.load.image('icon_skull', fantasyButtonAsset.icon.skull)
 
 		// import idle animation
 		util.loadAnimation(this, animationData, this.animation, 'idle')
@@ -92,6 +73,8 @@ export default class Home extends Phaser.Scene {
 				})
 			}
 		}, 1000)
+
+		util.playBGM(this, "music2")
 	}
 
 	update() {
@@ -134,7 +117,7 @@ export default class Home extends Phaser.Scene {
 	drawUI() {
 		this.sprite.action_background = this.add.sprite(0, this.gameHeight - 150, 'action_background').setOrigin(0)
 		util.rescale(this.sprite.action_background, this.gameWidth)
-		util.draw_fantasy_button(this, 380, 480, 'frame', 'ring_bg_orange', 'icon_scroll', () => {
+		util.draw_fantasy_button(this, 380, 480, 'frame', 'ring_bg_orange', 'icon_scroll', false, () => {
 			if(this.sys.game.global_level == 0){
 				this.scene.start("CutScene1")
 			}
@@ -148,13 +131,13 @@ export default class Home extends Phaser.Scene {
 				this.scene.start("Level")
 			}
 		})
-		util.draw_fantasy_button(this, 530, 480, 'frame', 'ring_bg_blue', 'icon_book', () => {
+		util.draw_fantasy_button(this, 530, 480, 'frame', 'ring_bg_blue', 'icon_book', false, () => {
 			// PUT QUEST HERE
 			// util.messageBox(this, "dialog_frame", "hud", "dialog_button", "Happy new year", "Got it!", "Message", () => {
 			// 	console.log("Hello bro")
 			// })
 		})
-		util.draw_fantasy_button(this, 680, 480, 'frame', 'ring_bg_yellow', 'icon_skull', () => {
+		util.draw_fantasy_button(this, 680, 480, 'frame', 'ring_bg_yellow', 'icon_skull', false, () => {
 			// util.attributeBox(this, "dialog_frame", "hud", "dialog_button", this.attribute, 1, (newAttribute) => {
 			// 	console.log(newAttribute)
 			// })

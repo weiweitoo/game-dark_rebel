@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import Preload from "./scenes/preload.js"
 import Menu from "./scenes/menu.js"
 import Home from "./scenes/home.js"
 import Level from "./scenes/level.js"
@@ -19,7 +20,7 @@ const config = {
       debug: false
     }
   },
-  scene: [Menu, Home , Level, CutScene1, CutScene2, CutScene3],
+  scene: [Preload, Menu, Home , Level, CutScene1, CutScene2, CutScene3],
 };
 
 const game = new Phaser.Game(config);

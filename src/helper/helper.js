@@ -1,4 +1,13 @@
+import music from '../constant/music.js'
+
 export default {
+	loadBGM(scene, musicname){
+		scene.load.audio(musicname, music[musicname]);
+	},
+	playBGM(scene, musicname){
+		let x = scene.sound.add(musicname);
+		x.play({loop : true})
+	},
 	pad(num, size) {
 		var s = num + "";
 		while (s.length < size) s = "0" + s;
@@ -39,7 +48,7 @@ export default {
 			"text": temp_text
 		}
 	},
-	draw_fantasy_button(scene, x, y, frame, background, icon, press_handler) {
+	draw_fantasy_button(scene, x, y, frame, background, icon, hide, press_handler) {
 		let background_object = scene.add.sprite(x, y, background).setOrigin(0.5)
 		background_object.displayWidth = 100
 		background_object.scaleY = background_object.scaleX
@@ -57,10 +66,17 @@ export default {
 			press_handler()
 		})
 
+		if(hide){
+			background_object.alpha = 0.8
+			frame_object.alpha = 0.8
+			icon_object.alpha = 0.8
+			console.log(123)
+		}
+
 		return {
 			"background": background_object,
 			"frame": frame_object,
-			"icon": background_object
+			"icon": icon_object
 		}
 	},
 	loadAnimation(scene, animationData, animationArray, animationString) {
