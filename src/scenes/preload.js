@@ -68,9 +68,13 @@ export default class Preload extends Phaser.Scene {
         this.load.audio('air', './src/assets/audio/effect/air.wav');
         
         // bgm
-        util.loadBGM(this, "music1")
-        util.loadBGM(this, "music2")
-        util.loadBGM(this, "music3")
+        util.loadBGM(this, "musicbg")
+        util.loadBGM(this, "musicwatera")
+        util.loadBGM(this, "musicwatern")
+        util.loadBGM(this, "musicwooda")
+        util.loadBGM(this, "musicwoodn")
+        util.loadBGM(this, "musicfirea")
+        util.loadBGM(this, "musicfiren")
 	}
 
 	create() {
