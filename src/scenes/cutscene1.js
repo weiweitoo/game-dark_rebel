@@ -111,12 +111,12 @@ export default class CutScene extends Phaser.Scene {
 							util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
 							"\"Golems, huh? We've had one too many encounters with them in the caves\n" +
 							"we live in. We know how to handle them. They just need a tad bit of\n" +
-							"discipline. I can lend you a hand in getting your heirlooms back.\"",
+							"discipline. I can lend you a hand in stopping them.\"",
 							"Continue", "Raiz", () => {
 								util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
 								"\"You... you can? Well, if you really can then, all right, young lord.\n" +
 								"Please help us. Those heirlooms are of great worth to us. If you manage\n" +
-								"to get them back, I will speak positive words of you and your people.\"",
+								"to get stop them, I will speak positive words of you and your people.\"",
 								"Continue", "Woodmon Villager", () => {
 									util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
 									"\"I thank you deeply. We will not fail you.\"",

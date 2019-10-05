@@ -288,8 +288,6 @@ export default {
 		// Call once, it will be continue to call when the buttonevent inside is trigger
 		updateDialogChoice()
 
-
-
 		temp_button.setInteractive()
 		temp_button.on('pointerup', function () {
 			press_handler(attributeArray)
@@ -378,4 +376,6 @@ export default {
 
 		// TODO add a tween out and in animation
 	}
+
+	
 }

@@ -50,6 +50,8 @@ export default class Home extends Phaser.Scene {
 		this.gameWidth = this.sys.game.canvas.getAttribute("width")
 		this.gameHeight = this.sys.game.canvas.getAttribute("height")
 
+		this.load.image('quest_button', './src/assets/ui/QuestsBTN_Medium.png')
+		this.load.image('quest_button_pressed', './src/assets/ui/QuestsBTN_Medium_Pressed.png')
 
 		// import idle animation
 		util.loadAnimation(this, animationData, this.animation, 'idle')
@@ -59,6 +61,7 @@ export default class Home extends Phaser.Scene {
 		this.drawEnvironment()
 		this.drawPlayer()
 		this.drawUI()
+		this.drawQuest()
 
 		this.loadAttribute()
 
@@ -188,5 +191,14 @@ export default class Home extends Phaser.Scene {
 			// strokeThickness: '2',
 			fill: '#DDDDD'
 		}).setOrigin(0)
+	}
+
+	drawQuest() {
+		this.button.start = util.drawButton(this, this.gameWidth - 770, 40, null, "quest_button", "quest_button_pressed", () => {
+			this.scene.start("Home")
+		}, {
+			fontFamily: 'bm-yeon-sung',
+			fontSize: '28px'
+		}, 150)
 	}
 }

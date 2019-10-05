@@ -35,14 +35,13 @@ export default class Preload extends Phaser.Scene {
 		this.load.image('dialog_button', './src/assets/ui/TextBTN_Medium.png')
 		this.load.image('dialog_frame', './src/assets/ui/UIBoardSmallSet.png')
 
-
 		this.load.image('frame', fantasyButtonAsset.frame)
 		this.load.image('ring_bg_orange', fantasyButtonAsset.ring_background.orange)
 		this.load.image('ring_bg_blue', fantasyButtonAsset.ring_background.blue)
 		this.load.image('ring_bg_yellow', fantasyButtonAsset.ring_background.yellow)
 		this.load.image('icon_scroll', fantasyButtonAsset.icon.scroll)
 		this.load.image('icon_book', fantasyButtonAsset.icon.book)
-        this.load.image('icon_skull', fantasyButtonAsset.icon.skull)
+		this.load.image('icon_skull', fantasyButtonAsset.icon.skull)
 
         this.load.image('frame', fantasyButtonAsset.frame)
 		this.load.image('ring_bg_orange', fantasyButtonAsset.ring_background.orange)

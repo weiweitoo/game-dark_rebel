@@ -20,7 +20,9 @@ const config = {
       debug: false
     }
   },
-  scene: [Preload, Menu, Home , Level, CutScene1, CutScene2, CutScene3],
+  // scene: [Preload, Menu, Home , Level, CutScene1, CutScene2, CutScene3],
+  // scene: [Menu, Home],
+  scene: [Home , Level],
 };
 
 const game = new Phaser.Game(config);
