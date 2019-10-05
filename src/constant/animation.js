@@ -47,5 +47,26 @@ export default
         "folder" : "player/Dying",
         "count" : 14,
         "repeat" : 0
+    },
+
+    "woodmon" : {
+        "prefix" : "0_Citizen_Communication_",
+        "folder" : "npc/Woodmon",
+        "count" : 29,
+        "repeat" : -1
+    },
+
+    "firemon" : {
+        "prefix" : "0_Citizen_Communication_",
+        "folder" : "npc/Firemon",
+        "count" : 29,
+        "repeat" : -1
+    },
+
+    "watermon" : {
+        "prefix" : "0_Citizen_Communication_",
+        "folder" : "npc/Watermon",
+        "count" : 29,
+        "repeat" : -1
     }
 }
