@@ -36,6 +36,12 @@ export default
         "count" : 11,
         "repeat" : 0
     },
+    "hurt" : {
+        "prefix" : "0_Reaper_Man_Hurt_",
+        "folder" : "player/hurt",
+        "count" : 11,
+        "repeat" : 0
+    },
     "dying" : {
         "prefix" : "0_Reaper_Man_Dying_",
         "folder" : "player/Dying",

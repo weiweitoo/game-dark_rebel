@@ -18,6 +18,12 @@ export default
         "count" : 11,
         "repeat" : 0
     },
+    "hurt" : {
+        "prefix" : "0_Golem_Hurt_",
+        "folder" : "golem/hurt",
+        "count" : 11,
+        "repeat" : 0
+    },
     "dying" : {
         "prefix" : "0_Golem_Dying_",
         "folder" : "golem/dying",

@@ -10,7 +10,7 @@ export default
     "a": {
         "str_base": 1.7,
         "str_grow": 0.2,
-        "vit_base": 1.0,
+        "vit_base": 0.8,
         "vit_grow": 0.06,
         "moveSpeed" : 3.9
     },

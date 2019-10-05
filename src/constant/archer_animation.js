@@ -18,6 +18,12 @@ export default
         "count" : 11,
         "repeat" : 0
     },
+    "hurt" : {
+        "prefix" : "0_Ogre_Hurt_",
+        "folder" : "archer/hurt",
+        "count" : 11,
+        "repeat" : 0
+    },
     "dying" : {
         "prefix" : "0_Orc_Dying_",
         "folder" : "archer/dying",

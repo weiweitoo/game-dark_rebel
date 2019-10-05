@@ -16,8 +16,8 @@ class Golem {
         this.vit = this.vit_base + (this.vit_grow * this.level)
         this.str = this.str_base + (this.str_grow * this.level)
 
-        this.max_hp = this.vit * attribute_level.hp.vit 
-        this.damage = this.str * attribute_level.damage.str
+        this.max_hp = Math.floor(this.vit * attribute_level.hp.vit )
+        this.damage = Math.floor(this.str * attribute_level.damage.str)
         this.curr_hp = this.max_hp
 
         this.state = null
@@ -33,22 +33,29 @@ class Golem {
     }
 
     getCurrentHP() {
-        return this.hp
+        return this.curr_hp
     }
 
     getDamage() {
         return this.damage
     }
 
-    receiveDamage(damage){
+    receiveDamage(scene, damage){
         this.state = "hited"
         setTimeout(() => {
-            this.state = null
+            // if the state still not mutable by other people, then set it back to null
+            if(this.state === "hited"){
+                this.state = null
+            }
         }, 100);
 
         this.curr_hp -= damage
         if(this.curr_hp < 0){
             this.curr_hp = 0
+            this.dead(scene)
+        }
+        else{
+            // TODO: play hurt animation
         }
         return this.curr_hp
     }
@@ -70,8 +77,27 @@ class Golem {
         this.object.play('golem_running')
     }
 
-    dead(){
-        
+    castDamage(){
+        this.object.play('golem_run_slashing')
+    }
+
+    dead(scene){
+        this.state = "dead"
+        this.object.play('golem_dying')
+
+        scene.add.tween({
+			targets: [this.object],
+			ease: 'Sine.easeInOut',
+			duration: 1000,
+			delay: 0,
+			alpha: {
+				getStart: () => 1,
+				getEnd: () => 0
+			},
+			onComplete: () => {
+				this.object.destroy()
+			}
+		});
     }
 }
 

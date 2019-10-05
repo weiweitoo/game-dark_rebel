@@ -72,6 +72,7 @@ export default {
 			})
 		}
 		animationArray[animationString].frameRate = animationData[animationString].count
+		animationArray[animationString].repeat = animationData[animationString].repeat
 	},
 	rescale(sprite, width) {
 		sprite.displayWidth = width
@@ -141,12 +142,12 @@ export default {
 
 		// TODO add a tween out and in animation
 	},
-	attributeBox(scene, frame, title, button, attributeArray, press_handler) {
+	attributeBox(scene, frame, title, button, attributeArray, seed, press_handler) {
 		let widthCenter = scene.sys.game.canvas.getAttribute("width") / 2
 		let heightCenter = scene.sys.game.canvas.getAttribute("height") / 2
 
 		let temp_frame = scene.add.sprite(widthCenter, heightCenter, frame).setOrigin(0.5)
-		this.rescale(temp_frame, 500)
+		this.rescale(temp_frame, 700)
 		let frameHeight = temp_frame.displayHeight
 
 		let temp_title = scene.add.sprite(widthCenter, heightCenter - (frameHeight / 2.3), title).setOrigin(0.5)
@@ -165,18 +166,29 @@ export default {
 			fontSize: '20px'
 		}).setOrigin(0.5)
 
+		let temp_subtitleText = null
+
 		let choiceButtonGroup = []
 		const updateDialogChoice = () => {
+			// Update remaining seed
+			if (temp_subtitleText) {
+				temp_subtitleText.destroy()
+			}
+			temp_subtitleText = scene.add.text(widthCenter, heightCenter - 60, "Reaming Seed: " + seed, {
+				fontFamily: 'bm-yeon-sung',
+				fontSize: '20px'
+			}).setOrigin(0.5)
+
 			// Clear previous created object(button and text)
-			choiceButtonGroup.map((button) => { 
+			choiceButtonGroup.map((button) => {
 				button.destroy()
 			})
 			// Draw new object(button and text)
 			Object.entries(attributeArray).map((attribute, index) => {
-				let temp_attr_button = scene.add.sprite(widthCenter + ((index % 2 == 0) ? -80 : 80), heightCenter + ((index < 2) ? -30 : 30), button).setOrigin(0.5)
+				let temp_attr_button = scene.add.sprite(widthCenter + ((index % 2 == 0) ? -80 : 80), heightCenter + 20 + ((index < 2) ? -30 : 30), button).setOrigin(0.5)
 				choiceButtonGroup.push(temp_attr_button)
 				this.rescale(temp_attr_button, 110)
-				let temp_attr_text = scene.add.text(widthCenter + ((index % 2 == 0) ? -80 : 80), heightCenter - 5 + ((index < 2) ? -30 : 30), this.capitalizeFLetter(attribute[0] + " = " + attribute[1]), {
+				let temp_attr_text = scene.add.text(widthCenter + ((index % 2 == 0) ? -80 : 80), heightCenter + 20 - 5 + ((index < 2) ? -30 : 30), this.capitalizeFLetter(attribute[0] + " = " + attribute[1]), {
 					fontFamily: 'bm-yeon-sung',
 					fontSize: '20px'
 				}).setOrigin(0.5)
@@ -184,9 +196,11 @@ export default {
 				choiceButtonGroup.push(temp_attr_text)
 				temp_attr_button.setInteractive()
 				temp_attr_button.on('pointerup', () => {
-					attributeArray[attribute[0]] += 1
-					console.log(attributeArray)
-					updateDialogChoice()
+					if (seed > 0) {
+						attributeArray[attribute[0]] += 1
+						seed -= 1
+						updateDialogChoice()
+					}
 				})
 			})
 		}
@@ -204,11 +218,83 @@ export default {
 			temp_button.destroy()
 			temp_titleText.destroy()
 			temp_buttonText.destroy()
+			temp_subtitleText.destroy()
 			// Clear previous created object(button and text)
-			choiceButtonGroup.map((button) => { 
+			choiceButtonGroup.map((button) => {
 				button.destroy()
 			})
 		})
+
+		// TODO add a tween out and in animation
+	},
+	skillBox(scene, frame, title, button, skillArray, press_handler) {
+		let widthCenter = scene.sys.game.canvas.getAttribute("width") / 2
+		let heightCenter = scene.sys.game.canvas.getAttribute("height") / 2
+
+		let temp_frame = scene.add.sprite(widthCenter, heightCenter, frame).setOrigin(0.5)
+		this.rescale(temp_frame, 500)
+		let frameHeight = temp_frame.displayHeight
+
+		let temp_title = scene.add.sprite(widthCenter, heightCenter - (frameHeight / 2.3), title).setOrigin(0.5)
+		this.rescale(temp_title, 160)
+
+		let temp_button = scene.add.sprite(widthCenter, heightCenter + (frameHeight / 2.3), button).setOrigin(0.5)
+		this.rescale(temp_button, 110)
+
+		let temp_titleText = scene.add.text(widthCenter, heightCenter - (frameHeight / 2.3), "Skill", {
+			fontFamily: 'bm-yeon-sung',
+			fontSize: '22px'
+		}).setOrigin(0.5)
+
+		let temp_buttonText = scene.add.text(widthCenter, heightCenter + (frameHeight / 2.3) - 5, "Confirm", {
+			fontFamily: 'bm-yeon-sung',
+			fontSize: '20px'
+		}).setOrigin(0.5)
+
+		let choiceButtonGroup = []
+		const updateDialogChoice = () => {
+			// Clear previous created object(button and text)
+			choiceButtonGroup.map((button) => {
+				button.destroy()
+			})
+			// Draw new object(button and text)
+			// Object.entries(attributeArray).map((attribute, index) => {
+			// 	let temp_attr_button = scene.add.sprite(widthCenter + ((index % 2 == 0) ? -80 : 80), heightCenter + ((index < 2) ? -30 : 30), button).setOrigin(0.5)
+			// 	choiceButtonGroup.push(temp_attr_button)
+			// 	this.rescale(temp_attr_button, 110)
+			// 	let temp_attr_text = scene.add.text(widthCenter + ((index % 2 == 0) ? -80 : 80), heightCenter - 5 + ((index < 2) ? -30 : 30), this.capitalizeFLetter(attribute[0] + " = " + attribute[1]), {
+			// 		fontFamily: 'bm-yeon-sung',
+			// 		fontSize: '20px'
+			// 	}).setOrigin(0.5)
+
+			// 	choiceButtonGroup.push(temp_attr_text)
+			// 	temp_attr_button.setInteractive()
+			// 	temp_attr_button.on('pointerup', () => {
+			// 		attributeArray[attribute[0]] += 1
+			// 		console.log(attributeArray)
+			// 		updateDialogChoice()
+			// 	})
+			// })
+		}
+
+		// Call once, it will be continue to call when the buttonevent inside is trigger
+		// updateDialogChoice()
+
+
+
+		// temp_button.setInteractive()
+		// temp_button.on('pointerup', function () {
+		// 	press_handler(attributeArray)
+		// 	temp_frame.destroy()
+		// 	temp_title.destroy()
+		// 	temp_button.destroy()
+		// 	temp_titleText.destroy()
+		// 	temp_buttonText.destroy()
+		// 	// Clear previous created object(button and text)
+		// 	choiceButtonGroup.map((button) => { 
+		// 		button.destroy()
+		// 	})
+		// })
 
 		// TODO add a tween out and in animation
 	}

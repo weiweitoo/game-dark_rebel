@@ -131,9 +131,10 @@ export default class Home extends Phaser.Scene {
 			})
 		})
 		util.draw_fantasy_button(this, 680, 480, 'frame', 'ring_bg_yellow', 'icon_skull', () => {
-			util.attributeBox(this, "dialog_frame", "hud", "dialog_button", this.attribute, (newAttribute) => {
+			util.attributeBox(this, "dialog_frame", "hud", "dialog_button", this.attribute, 1, (newAttribute) => {
 				console.log(newAttribute)
 			})
+			// console.log("exit")
 		})
 
 		this.ui.name = util.drawButton(this, 120, 450, this.sys.game.global_name, "hud", null, () => {

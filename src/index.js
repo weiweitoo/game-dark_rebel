@@ -14,11 +14,12 @@ const config = {
     default: 'arcade',
     arcade: {
       gravity: { y: 0 }, 
-      debug: true
+      debug: false
     }
   },
   // scene: [Menu, Home],
-  scene: [CutScene, Menu, Home , Level],
+  // scene: [CutScene, Menu, Home , Level],
+  scene: [Menu, Home , Level],
 };
 
 const game = new Phaser.Game(config);

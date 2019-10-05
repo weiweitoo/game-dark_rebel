@@ -16,8 +16,8 @@ class Melee {
         this.vit = this.vit_base + (this.vit_grow * this.level)
         this.str = this.str_base + (this.str_grow * this.level)
 
-        this.max_hp = this.vit * attribute_level.hp.vit 
-        this.damage = this.str * attribute_level.damage.str
+        this.max_hp = Math.floor(this.vit * attribute_level.hp.vit )
+        this.damage = Math.floor(this.str * attribute_level.damage.str)
         this.curr_hp = this.max_hp
 
         this.state = null
@@ -95,7 +95,7 @@ class Melee {
 				getEnd: () => 0
 			},
 			onComplete: () => {
-				// Handle completion
+				this.object.destroy()
 			}
 		});
     }
