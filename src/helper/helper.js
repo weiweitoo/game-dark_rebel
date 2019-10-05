@@ -141,6 +141,70 @@ export default {
 
 		// TODO add a tween out and in animation
 	},
+
+	conversationBox(scene, frame, title, button, dialogText, buttonText, titleText, press_handler) {
+		this.conversationBoxHelper(scene, frame, title, button, dialogText, buttonText, titleText, press_handler)
+	},
+
+	conversationBoxHelper(scene, frame, title, button, dialogText, buttonText, titleText, press_handler) {
+		// Do not call this function, call messageBox or alertBox
+		let widthCenter = scene.sys.game.canvas.getAttribute("width") / 2
+		let heightCenter = scene.sys.game.canvas.getAttribute("height") / 2
+
+		let temp_frame = scene.add.sprite(widthCenter, heightCenter, frame).setOrigin(0.5)
+		this.rescale(temp_frame, 550)
+		let frameHeight = temp_frame.displayHeight
+
+		let temp_title = scene.add.sprite(widthCenter, heightCenter - (frameHeight / 2.3), title).setOrigin(0.5)
+		let temp_titleText
+		if (titleText !== null) {
+			this.rescale(temp_title, 160)
+			temp_titleText = scene.add.text(widthCenter, heightCenter - (frameHeight / 2.3), titleText, {
+				fontFamily: 'bm-yeon-sung',
+				fontSize: '17px'
+			}).setOrigin(0.5)
+		} else {
+			this.rescale(temp_title, 60)
+		}
+
+		let temp_button = scene.add.sprite(widthCenter, heightCenter + (frameHeight / 2.3), button).setOrigin(0.5)
+		this.rescale(temp_button, 110)
+
+		temp_button.setInteractive()
+		temp_button.on('pointerup', function () {
+			press_handler()
+			temp_frame.destroy()
+			temp_title.destroy()
+			temp_button.destroy()
+			temp_dialog_text.destroy()
+			temp_button_text.destroy()
+			if (titleText !== null) {
+				temp_titleText.destroy()
+			}
+		})
+
+		let temp_dialog_text = scene.add.text(widthCenter, heightCenter, dialogText, {
+			fontFamily: 'bm-yeon-sung',
+			fontSize: '15px'
+		}).setOrigin(0.5)
+
+		let temp_button_text = scene.add.text(widthCenter, heightCenter + (frameHeight / 2.3) - 5, buttonText, {
+			fontFamily: 'bm-yeon-sung',
+			fontSize: '15px'
+		}).setOrigin(0.5)
+
+		return {
+			"frame": temp_frame,
+			"title": temp_title,
+			"button": temp_button,
+			"dialogText": temp_dialog_text,
+			"buttonText": temp_button_text
+		}
+
+		// TODO add a tween out and in animation
+	},
+
+
 	attributeBox(scene, frame, title, button, attributeArray, press_handler) {
 		let widthCenter = scene.sys.game.canvas.getAttribute("width") / 2
 		let heightCenter = scene.sys.game.canvas.getAttribute("height") / 2

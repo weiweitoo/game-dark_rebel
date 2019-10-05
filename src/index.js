@@ -2,7 +2,9 @@ import Phaser from "phaser";
 import Menu from "./scenes/menu.js"
 import Home from "./scenes/home.js"
 import Level from "./scenes/level.js"
-import CutScene from "./scenes/cutscene.js"
+import CutScene1 from "./scenes/cutscene1.js"
+import CutScene2 from "./scenes/cutscene2.js"
+import CutScene3 from "./scenes/cutscene3.js"
 
 const config = {
   type: Phaser.AUTO,
@@ -18,7 +20,7 @@ const config = {
     }
   },
   // scene: [Menu, Home],
-  scene: [CutScene, Menu, Home , Level],
+  scene: [CutScene3, Menu, Home , Level],
 };
 
 const game = new Phaser.Game(config);
