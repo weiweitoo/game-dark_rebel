@@ -1,5 +1,3 @@
-import animationData from '../constant/animation.js'
-
 export default {
 	pad(num, size) {
 		var s = num + "";
@@ -65,7 +63,7 @@ export default {
 			"icon": background_object
 		}
 	},
-	loadAnimation(scene, animationArray, animationString) {
+	loadAnimation(scene, animationData, animationArray, animationString) {
 		for (let index = 0; index < animationData[animationString].count; index++) {
 			let num = this.pad(index, 3)
 			scene.load.image(animationData[animationString].prefix + num, "./src/assets/" + animationData[animationString].folder + "/" + animationData[animationString].prefix + num + ".png")

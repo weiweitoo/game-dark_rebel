@@ -9,19 +9,15 @@ const config = {
   width: 861,
   // height: 484,
   height: 540,
-  global: {
-    level : 1
-  },
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 300 }, 
-      debug: false
+      gravity: { y: 0 }, 
+      debug: true
     }
   },
   // scene: [Menu, Home],
   scene: [Menu, Home , Level],
-  // scene: [Home],
 };
 
 const game = new Phaser.Game(config);

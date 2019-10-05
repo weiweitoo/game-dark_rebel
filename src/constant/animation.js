@@ -35,5 +35,11 @@ export default
         "folder" : "player/Run Throwing",
         "count" : 11,
         "repeat" : 0
+    },
+    "dying" : {
+        "prefix" : "0_Reaper_Man_Dying_",
+        "folder" : "player/Dying",
+        "count" : 14,
+        "repeat" : 0
     }
 }

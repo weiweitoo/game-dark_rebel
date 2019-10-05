@@ -1,4 +1,5 @@
 import util from '../helper/helper.js'
+import animationData from '../constant/animation.js'
 
 export default class Menu extends Phaser.Scene {
 
@@ -36,7 +37,7 @@ export default class Menu extends Phaser.Scene {
 		this.load.image('button_pressed', './src/assets/ui/TextBTN_Medium_Pressed.png')
 
 		// import idle animation
-		util.loadAnimation(this, this.animation, 'idle')
+		util.loadAnimation(this, animationData, this.animation, 'idle')
 		this.initGameData()
 	}
 
@@ -84,9 +85,7 @@ export default class Menu extends Phaser.Scene {
 
 	initGameData() {
 		this.sys.game.global_name = "Raiz"
-		this.sys.game.global_level = 2
-		this.sys.game.global_hp = 100
-		this.sys.game.global_mp = 50
+		this.sys.game.global_level = 1
 		this.sys.game.global_str = 2
 		this.sys.game.global_agi = 2
 		this.sys.game.global_int = 2

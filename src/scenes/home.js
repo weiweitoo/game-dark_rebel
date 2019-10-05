@@ -1,5 +1,6 @@
 import util from '../helper/helper.js'
 import fantasyButtonAsset from '../constant/fantasy_button.js'
+import animationData from '../constant/animation.js'
 
 export default class Home extends Phaser.Scene {
 
@@ -70,7 +71,7 @@ export default class Home extends Phaser.Scene {
 		this.load.image('icon_skull', fantasyButtonAsset.icon.skull)
 
 		// import idle animation
-		util.loadAnimation(this, this.animation, 'idle')
+		util.loadAnimation(this, animationData, this.animation, 'idle')
 	}
 
 	create() {
