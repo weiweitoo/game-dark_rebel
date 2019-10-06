@@ -43,6 +43,11 @@ export default class Home extends Phaser.Scene {
 		}
 		this.terrain_dark_ground_height = null
 		this.terrain_dark_grass_height = null
+		this.missionText = null
+
+		this.mission1active = null
+		this.mission2active = null
+		this.mission3active = null
 	}
 
 	preload() {
@@ -61,23 +66,22 @@ export default class Home extends Phaser.Scene {
 		this.drawEnvironment()
 		this.drawPlayer()
 		this.drawUI()
-		this.drawQuest()
 
 		this.loadAttribute()
 
 		// For tutorial
 		setTimeout(() => {
-			if(this.sys.game.global_level == 0){
+			if (this.sys.game.global_level == 0) {
 				util.messageBox(this, "dialog_frame", "hud", "dialog_button", "Welcome back. Raiz. \nClick the 'scroll' button to start the journey", "Okay", "Tutorial", () => {
 				})
 			}
-			else if(this.sys.game.global_level == 1){
+			else if (this.sys.game.global_level == 1) {
 				util.messageBox(this, "dialog_frame", "hud", "dialog_button", "You got a mission!\nClick the 'book' button to check quest", "Okay", "Tutorial", () => {
 				})
 			}
 		}, 1000)
 
-		util.playBGM(this, "music2")
+		this.bgm = util.playBGM(this, "musicbg")
 	}
 
 	update() {
@@ -121,25 +125,49 @@ export default class Home extends Phaser.Scene {
 		this.sprite.action_background = this.add.sprite(0, this.gameHeight - 150, 'action_background').setOrigin(0)
 		util.rescale(this.sprite.action_background, this.gameWidth)
 		util.draw_fantasy_button(this, 380, 480, 'frame', 'ring_bg_orange', 'icon_scroll', false, () => {
-			if(this.sys.game.global_level == 0){
+			if (this.sys.game.global_level == 0) {
+				this.mission1active = true
+				this.bgm.stop()
 				this.scene.start("CutScene1")
 			}
-			else if(this.sys.game.global_level == 2){
+			else if (this.sys.game.global_level == 2) {
+				this.mission2active = true
+				this.bgm.stop()
 				this.scene.start("CutScene2")
 			}
-			else if(this.sys.game.global_level == 3){
+			else if (this.sys.game.global_level == 3) {
+				this.mission3active = true
+				this.bgm.stop()
 				this.scene.start("CutScene3")
 			}
-			else{
+			else {
+				this.bgm.stop()
 				this.scene.start("Level")
 			}
 		})
+
 		util.draw_fantasy_button(this, 530, 480, 'frame', 'ring_bg_blue', 'icon_book', false, () => {
 			// PUT QUEST HERE
-			// util.messageBox(this, "dialog_frame", "hud", "dialog_button", "Happy new year", "Got it!", "Message", () => {
-			// 	console.log("Hello bro")
-			// })
+
+			if (this.sys.game.global_level == 1 && this.mission1active == true) {
+				this.missionText = "Kill the golems in Woodmon Forest."
+			}
+
+			else if (this.sys.game.global_level == 2 && this.mission2active == true) {
+				this.missionText = "Defeat the boss in Firemon Valley."
+			}
+
+			else if (this.sys.game.global_level == 3 && this.mission3active == true) {
+				this.missionText = "Defeat the boss in Watermon Creek."
+			}
+
+			else {this.missionText = "No quests available..."}
+
+			util.messageBox(this, "dialog_frame", "hud", "dialog_button", this.missionText, "Got it!", "Message", () => {
+				console.log("Hello bro")
+			})
 		})
+
 		util.draw_fantasy_button(this, 680, 480, 'frame', 'ring_bg_yellow', 'icon_skull', false, () => {
 			// util.attributeBox(this, "dialog_frame", "hud", "dialog_button", this.attribute, 1, (newAttribute) => {
 			// 	console.log(newAttribute)
@@ -191,14 +219,5 @@ export default class Home extends Phaser.Scene {
 			// strokeThickness: '2',
 			fill: '#DDDDD'
 		}).setOrigin(0)
-	}
-
-	drawQuest() {
-		this.button.start = util.drawButton(this, this.gameWidth - 770, 40, null, "quest_button", "quest_button_pressed", () => {
-			this.scene.start("Home")
-		}, {
-			fontFamily: 'bm-yeon-sung',
-			fontSize: '28px'
-		}, 150)
 	}
 }

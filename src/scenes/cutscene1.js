@@ -81,6 +81,8 @@ export default class CutScene extends Phaser.Scene {
 		this.drawUI()
 		this.drawNPC()
 
+		this.bgm = util.playBGM(this, "musicwoodn")
+
 		util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
 		"\"Hello there, good sir! How can I⁠— Wait... Do my eyes deceive me?\n" +
 		" Are you... a Darkmon?\"", 
@@ -124,6 +126,7 @@ export default class CutScene extends Phaser.Scene {
 										util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
 										"\"Fair tidings, young lord. And thank you for lending a hand.\"",
 										"Continue", "Woodmon Villager", () => {
+											this.bgm.stop()
 											this.sys.game.global_level += 1
 											this.scene.start("Home")
 										})

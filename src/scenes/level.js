@@ -225,6 +225,7 @@ export default class Level extends Phaser.Scene {
 
 		this.spawn_level_or_winner()
 		this.removeCoolDown()
+		this.playBackgroundMusic()
 
 		this.gameState = "playing"
 	}
@@ -240,6 +241,10 @@ export default class Level extends Phaser.Scene {
 
 
 	}
+
+	playBackgroundMusic(){
+		this.bgm = util.playBGM(this, this.level_asset.bgm);
+	}	
 
 	initAudio() {
 		this.audio.attack = this.sound.add('attack');
@@ -280,6 +285,7 @@ export default class Level extends Phaser.Scene {
 						this.sys.game.global_int = newAttribute.int
 						this.sys.game.global_vit = newAttribute.vit
 						this.sys.game.global_level += 1
+						this.bgm.stop();
 						this.scene.start('Home')
 					})
 				})
@@ -442,15 +448,15 @@ export default class Level extends Phaser.Scene {
 		}).setOrigin(0)
 
 		// util.draw_fantasy_button(this, 270, 480, 'frame', 'ring_bg_yellow', 'icon_sword', () => { this.castSkill(1) })
-		if(this.sys.game.global_skill[0] === 1){
+		// if(this.sys.game.global_skill[0] === 1){
 			this.hud.fire = util.draw_fantasy_button(this, 420, 480, 'frame', 'ring_bg_orange', 'icon_candles', this.sys.game.global_skill[0] == 0, () => { this.castSkill(2) })
-		}
-		else if(this.sys.game.global_skill[1] === 1){
+		// }
+		// else if(this.sys.game.global_skill[1] === 1){
 			this.hud.water = util.draw_fantasy_button(this, 570, 480, 'frame', 'ring_bg_green', 'icon_potion', this.sys.game.global_skill[1] == 0, () => { this.castSkill(3) })
-		}
-		else if(this.sys.game.global_skill[2] === 1){
+		// }
+		// else if(this.sys.game.global_skill[2] === 1){
 			this.hud.air = util.draw_fantasy_button(this, 720, 480, 'frame', 'ring_bg_blue', 'icon_shield', this.sys.game.global_skill[2] == 0, () => { this.castSkill(4) })
-		}
+		// }
 
 	}
 
@@ -530,7 +536,8 @@ export default class Level extends Phaser.Scene {
 			this.scene.unit.player.play('dying')
 			// wait awhile
 			util.messageBox(this.scene, "dialog_frame", "hud", "dialog_button", "Keep it up... Try again!", "Alright", "Failed", () => {
-				this.scene.scene.start('home')
+				this.scene.bgm.stop();
+				this.scene.scene.start('Home')
 			})
 		}
 

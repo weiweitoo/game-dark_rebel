@@ -81,58 +81,60 @@ export default class CutScene3 extends Phaser.Scene {
 		this.drawUI()
 		this.drawNPC()
 
+		this.bgm = util.playBGM(this, "musicwatern")
+
 		util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
-		"\"Ohoho, what a rare sight — truly a delight for artists like\n" +
-        "myself! I could be mistaking you and you are a person\n" +
-        "passionate about dressing up but are you a Darkmon?\"", 
-		"Continue", "Firemon Artist", () => {
+		"\"Aaah, the demon of the creek is upon us and has eaten\n" +
+		"most of our livestock! Flee before it catches you and\n" +
+		"devours you whole!\"", 
+		"Continue", "Watermon Farmer", () => {
 			util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
-			"\"I am, yes. I am Raiz, the new ruler to the Darkmon people.\n" +
-            "I must admit your eagerness to see a Darkmon is surprising.\n" +
-            "Most others are... I hate to be disrespectful, but rather\n" +
-            "hostile towards us. It is upsetting.\"",
+			"\"Whoa, hang on there. You mentioned a demon around the\n" +
+			"whereabouts of the creek. Please, tell me more and I\n" +
+			"could lend a hand to stop it.\"",
 			"Continue", "Raiz", () => {
 				util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
-				"\"I do not fear the dangers of your kind, dear Darkmon,\n" +
-                "but I am certainly enthralled by your beauty! I have always\n" +
-                "adored the special and unique. Painting art of a regular\n" +
-                "sight, after all, certainly bores me. I long for something\n" +
-                "new and bold, even more so after recently losing access\n" +
-                "to my favourite spot.\"",
-				"Continue", "Firemon Artist", () => {
+				"\"Oh, it's absolutely terrible, sir! The wretched demon\n" +
+				"has done nothing more than invade our lands and prey\n" +
+				"upon our source of dairy. My family are now penniless\n" +
+				"and craving for those extravagant cheese and butter we\n" +
+				"used to eat every week. This foul beast must come to a\n" +
+				"stop!\"",
+				"Continue", "Watermon Farmer", () => {
 					util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
-					"\"Your compliments soothe me, great artist. But something\n" +
-                    "you have said piqued my interest: you mentioned recently\n" +
-                    "losing access to your favourite spot. Out of curiousity,\n" +
-                    "may I know what happened?\"",
+					"\"That truly is a terrible stroke of luck... Has the\n" +
+					"monarch order no command to put a stop to this creature?\n" +
+					"At this rate, the beast might grow even more greedy and\n" +
+					"begin chasing after the livestock of others in the\n" +
+					"village.\"",
 					"Continue", "Raiz", () => {
 						util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
-						"\"Ah... it is such great misfortune, dear sir. A giant\n" +
-                        "beast invaded the lands and threatened death should I\n" +
-                        "dare return. Naturally, fearing my own life, I am\n" +
-                        "anxious to head back. But my poor creative mind, I do\n" +
-                        "miss it ever so much!\"",
-						"Continue", "Firemon Artist", () => {
+						"\"Oh, the men of the King has sent out search campaigns\n" +
+						"to hunt the monstrousity but the beast is smart, albeit\n" +
+						"cowardly. It hides whenever it sees the King's men, and\n" +
+						"stays afar until they are dispersed. Afterwards... it\n" +
+						"comes back.\"",
+						"Continue", "Watermon Farmer", () => {
 							util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
-							"\"I see... Well, I'd be more than happy to return that\n" +
-                            "spot to you. I would like to change the cruel\n" +
-                            "impression most have on the Darkmon. Furthermore, I\n" + 
-                            "would like to see you create more art of your favourite\n" +
-                            "place.\"",
+							"\"Hmmm... it looks like it does not flee at the sight of\n" +
+							"people whom are not of the King's men. If so, I'd be\n" +
+							"more than happy to lend a hand in putting a rest to this\n" +
+							"calamity.\"",
 							"Continue", "Raiz", () => {
 								util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
-								"\"You will? Why, I am ever so grateful for your offer!\n" +
-                                "If you help me out, I am more than happy to tell the\n" + 
-                                "other Firemon of the purity within the hearts of the\n" +
-                                "Darkmon.\"",
-								"Continue", "Firemon Artist", () => {
+								"\"Oh, you will? Thank you so much, dear friend! Please, we\n" +
+								"truly do need your help— Oh. You are... a Darkmon?\"",
+								"Continue", "Watermon Farmer", () => {
 									util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
-									"\"That would be great. I'll return to you once that\n" +
-                                    "beast has been downed.\"",
+									"\"I am. But it does not change the fact that I wish to help.\"",
 									"Continue", "Raiz", () => {
 										util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
-										"\"Be careful, dear friend.\"",
-										"Continue", "Firemon Artist", () => {
+										"\"I... am not fond of Darkmon, I must uneasily admit. But\n" +
+										"I am more spiteful towards that wretched beast. Please\n" +
+										"help us, Darkmon. If you do, I will start to think brighter\n" +
+										"of you and your people.\"",
+										"Continue", "Watermon Farmer", () => {
+											this.bgm.stop()
 											this.scene.start("Level")
 										})
 									})

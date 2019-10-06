@@ -81,6 +81,8 @@ export default class CutScene2 extends Phaser.Scene {
 		this.drawUI()
 		this.drawNPC()
 
+		this.bgm = util.playBGM(this, "musicfiren")
+
 		util.conversationBox(this, "dialog_frame", "hud", "dialog_button", 
 		"\"Ohoho, what a rare sight — truly a delight for artists like\n" +
         "myself! I could be mistaking you and you are a person\n" +
@@ -134,6 +136,7 @@ export default class CutScene2 extends Phaser.Scene {
 										"\"Be careful, dear friend.\"",
 										"Continue", "Firemon Artist", () => {
 											// learn skill
+											this.bgm.stop()
 											this.sys.game.global_skill[1] = 1
 											this.sys.game.global_skill[2] = 1
 											this.scene.start("Level")

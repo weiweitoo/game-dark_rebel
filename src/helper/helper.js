@@ -7,6 +7,7 @@ export default {
 	playBGM(scene, musicname){
 		let x = scene.sound.add(musicname);
 		x.play({loop : true})
+		return x
 	},
 	pad(num, size) {
 		var s = num + "";
